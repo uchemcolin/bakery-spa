@@ -80,17 +80,17 @@ The SPA does NOT:
 2. ARCHITECTURE
 ================================================================================
 
-    Browser  -->  Nuxt (localhost:3000)
-                    |
-                    | GET  /api/user     (session cookie)
-                    | POST /api/logout   (session cookie)
-                    | GET  /sso/redirect (browser navigation)
-                    v
-                  Laravel (localhost:8000)
-                    |
-                    | OIDC
-                    v
-                  Keycloak (localhost:9000)
+  ```mermaid
+  flowchart TD
+      A[Browser] --> B[Nuxt<br/>localhost:3000]
+
+
+  B -->|GET /api/user<br/>Session cookie| C[Laravel<br/>localhost:8000]
+  B -->|POST /api/logout<br/>Session cookie| C
+  B -->|GET /sso/redirect<br/>Browser navigation| C
+
+  C -->|OIDC| D[Keycloak<br/>localhost:9000]
+  ```
 
 Two independent sessions exist:
 
