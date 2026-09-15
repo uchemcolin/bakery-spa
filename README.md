@@ -8,21 +8,26 @@ A Nuxt 4 single-page application (SPA) delegates all authentication responsibili
 
 The SPA never communicates directly with Keycloak and never receives, stores, or processes OIDC access tokens, ID tokens, or refresh tokens. It also stores no authentication secrets. Instead, the SPA communicates exclusively with the Laravel BFF, asking it questions such as “Who am I?” Laravel handles the authentication flow, maintains the server-side session, and returns only the necessary authenticated user information to the SPA, which then uses that information to render the appropriate application state.
 
-Architecture
+================================================================================
+ARCHITECTURE
+================================================================================
+
 Browser
-   │
-   ▼
+   |
+   v
 Nuxt 3 SPA
-   │
-   │ Session cookie
-   ▼
+   |
+   | Session cookie
+   v
 Laravel 12 BFF
-   │
-   │ OpenID Connect
-   ▼
+   |
+   | OpenID Connect
+   v
 Keycloak
 
-Key characteristics
+================================================================================
+KEY CHARACTERISTICS
+================================================================================
 
 Server-side authentication through Laravel
 
