@@ -25,7 +25,7 @@ const { user, logout } = useAuth()
     </main>
 
     <footer class="bg-light py-3 mt-auto text-center text-muted">
-      <small>SSO Demo — Nuxt 3 + Laravel 12 + Keycloak</small>
+      <small>SSO Demo — Nuxt 4 + Laravel 12 + Keycloak</small>
     </footer>
   </div>
 </template>

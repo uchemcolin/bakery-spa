@@ -14,7 +14,7 @@ ARCHITECTURE
 
 ```mermaid
 flowchart TD
-    A[Browser] --> B[Nuxt 3 SPA]
+    A[Browser] --> B[Nuxt 4 SPA]
     B -->|Session cookie| C[Laravel 12 BFF]
     C -->|OpenID Connect| D[Keycloak]
 ```
