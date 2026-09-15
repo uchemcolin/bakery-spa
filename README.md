@@ -2,10 +2,43 @@
 BAKERY SPA — Nuxt 4 + Laravel 12 + Keycloak
 ================================================================================
 
-A Nuxt 4 single-page application that delegates all authentication to a
-Laravel 12 API acting as a Backend-for-Frontend (BFF). The SPA never sees
-tokens, never talks to Keycloak, and never stores secrets. It simply asks
-Laravel "who am I?" and renders the answer.
+A full-stack Single Sign-On (SSO) demonstration using Nuxt 4, Laravel 12, and Keycloak.
+
+A Nuxt 4 single-page application (SPA) delegates all authentication responsibilities to a Laravel 12 API acting as a Backend-for-Frontend (BFF). Laravel communicates with Keycloak using OpenID Connect (OIDC) and owns the authenticated server-side session.
+
+The SPA never communicates directly with Keycloak and never receives, stores, or processes OIDC access tokens, ID tokens, or refresh tokens. It also stores no authentication secrets. Instead, the SPA communicates exclusively with the Laravel BFF, asking it questions such as “Who am I?” Laravel handles the authentication flow, maintains the server-side session, and returns only the necessary authenticated user information to the SPA, which then uses that information to render the appropriate application state.
+
+Architecture
+Browser
+   │
+   ▼
+Nuxt 3 SPA
+   │
+   │ Session cookie
+   ▼
+Laravel 12 BFF
+   │
+   │ OpenID Connect
+   ▼
+Keycloak
+
+Key characteristics
+
+Server-side authentication through Laravel
+
+Keycloak SSO using OpenID Connect
+
+Laravel Sanctum stateful SPA sessions
+
+HttpOnly session-based authentication
+
+Federated logout
+
+No tokens stored in the browser
+
+Nuxt SSR cookie forwarding
+
+Explicit CORS and CSRF configuration
 
 ================================================================================
 TABLE OF CONTENTS
