@@ -1,8 +1,8 @@
 ================================================================================
-BAKERY SPA — Nuxt 3 + Laravel 12 + Keycloak
+BAKERY SPA — Nuxt 4 + Laravel 12 + Keycloak
 ================================================================================
 
-A Nuxt 3 single-page application that delegates all authentication to a
+A Nuxt 4 single-page application that delegates all authentication to a
 Laravel 12 API acting as a Backend-for-Frontend (BFF). The SPA never sees
 tokens, never talks to Keycloak, and never stores secrets. It simply asks
 Laravel "who am I?" and renders the answer.
@@ -340,7 +340,7 @@ const { user, logout } = useAuth()
     </main>
 
     <footer class="bg-light py-3 mt-auto text-center text-muted">
-      <small>SSO Demo — Nuxt 3 + Laravel 12 + Keycloak</small>
+      <small>SSO Demo — Nuxt 4 + Laravel 12 + Keycloak</small>
     </footer>
   </div>
 </template>
@@ -361,7 +361,7 @@ if (import.meta.client) {
   <div class="container">
     <div class="text-center py-5">
       <h1 class="display-4 mb-3">Bakery SSO</h1>
-      <p class="lead mb-4">Single Sign-On with Nuxt 3 + Laravel 12 + Keycloak</p>
+      <p class="lead mb-4">Single Sign-On with Nuxt 4 + Laravel 12 + Keycloak</p>
 
       <div v-if="user">
         <p class="fs-5">Welcome back, <strong>{{ user.name }}</strong></p>
