@@ -12,18 +12,11 @@ The SPA never communicates directly with Keycloak and never receives, stores, or
 ARCHITECTURE
 ================================================================================
 
-Browser
-   |
-   v
-Nuxt 3 SPA
-   |
-   | Session cookie
-   v
-Laravel 12 BFF
-   |
-   | OpenID Connect
-   v
-Keycloak
+```mermaid
+flowchart TD
+    A[Browser] --> B[Nuxt 3 SPA]
+    B -->|Session cookie| C[Laravel 12 BFF]
+    C -->|OpenID Connect| D[Keycloak]
 
 ================================================================================
 KEY CHARACTERISTICS
