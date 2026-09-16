@@ -1,12 +1,15 @@
 export default defineNuxtRouteMiddleware(async () => {
-  const { user, fetchUser, login } = useAuth()
+  // Access the current authenticated user and the function
+  // responsible for fetching the user's authentication state.
+  const { user, fetchUser } = useAuth()
 
-  await fetchUser()
+  // Force a fresh authentication check on every navigation
+  // through this middleware instead of relying on cached state.
+  await fetchUser(true)
 
+  // If no authenticated user was returned, redirect the visitor
+  // to the login page.
   if (!user.value) {
-    // Not authenticated → trigger the SSO flow
-    if (import.meta.client) {
-      login()
-    }
+    return navigateTo('/login')
   }
 })
