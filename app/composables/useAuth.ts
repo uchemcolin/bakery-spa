@@ -7,6 +7,14 @@ interface User {
   oidc_subject: string
 }
 
+// High-level authentication state, derived from the fields below.
+export type AuthStatus =
+  | 'idle'            // never checked yet
+  | 'loading'         // request in flight
+  | 'authenticated'   // user is present
+  | 'unauthenticated' // checked, no user
+  | 'error'           // check failed (network / server error)
+
 export const useAuth = () => {
   // Access Nuxt runtime configuration, such as the API and login URLs.
   const config = useRuntimeConfig()
@@ -22,6 +30,21 @@ export const useAuth = () => {
   // has already been checked.
   const initialized = useState<boolean>('auth.initialized', () => false)
 
+  // Message from the last failed auth check (null when there is no error).
+  const error = useState<string | null>('auth.error', () => null)
+
+  /**
+   * Derived, UI-friendly status. Prefer this over reading
+   * `loading` / `initialized` / `user` directly in templates.
+   */
+  const status = computed<AuthStatus>(() => {
+    if (loading.value) return 'loading'
+    if (error.value) return 'error'
+    if (user.value) return 'authenticated'
+    if (initialized.value) return 'unauthenticated'
+    return 'idle'
+  })
+
   /**
    * Fetch the currently authenticated user from the API.
    *
@@ -35,6 +58,7 @@ export const useAuth = () => {
     }
 
     loading.value = true
+    error.value = null
 
     try {
       // useRequestFetch forwards the browser's cookies when the request
@@ -55,9 +79,21 @@ export const useAuth = () => {
       initialized.value = true
 
       return data
-    } catch {
-      // If the request fails, treat the user as unauthenticated.
-      user.value = null
+    } catch (e: any) {
+      const code = e?.status ?? e?.statusCode
+
+      // 401 just means "not signed in" — a normal, expected state.
+      if (code === 401) {
+        user.value = null
+        error.value = null
+      } else {
+        // Anything else (network, 5xx, malformed response) is a real error.
+        user.value = null
+        error.value =
+          e?.data?.message ?? e?.message ?? 'Failed to check authentication.'
+      }
+
+      // Mark the authentication check as complete either way.
       initialized.value = true
 
       return null
@@ -112,6 +148,7 @@ export const useAuth = () => {
     // Clear the local user state regardless of whether the API request succeeded.
     user.value = null
     initialized.value = true
+    error.value = null
 
     if (import.meta.client) {
       if (logoutUrl) {
@@ -130,6 +167,8 @@ export const useAuth = () => {
     user,
     loading,
     initialized,
+    error,
+    status,
     fetchUser,
     login,
     logout,

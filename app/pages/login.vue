@@ -31,10 +31,8 @@ const { login } = useAuth()
 
             <!--
               Clicking the button calls the `login` function
-              from the useAuth composable.
-              
-              The login function redirects the browser to
-              the configured Keycloak login URL.
+              from the useAuth composable, which redirects the
+              browser to the configured Keycloak login URL.
             -->
             <button
               @click="login"
