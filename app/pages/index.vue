@@ -17,7 +17,7 @@ if (import.meta.client) {
 
       <!-- Brief description of the authentication setup. -->
       <p class="lead mb-4">
-        Single Sign-On with 4 + Laravel 12 + Keycloak
+        Single Sign-On with Nuxt 4 + laravel 12 + Keycloak
       </p>
 
       <!-- Loading: still checking whether the visitor is signed in. -->
